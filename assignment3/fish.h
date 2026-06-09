@@ -17,7 +17,7 @@ public:
 	int getY() { return y; }
 	bool getLive() { return live; }
 	void setLive(bool l) { live = l; }
-
+	int fishHit = false;
 private:
 	int x;
 	int y;

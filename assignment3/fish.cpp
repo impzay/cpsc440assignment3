@@ -4,11 +4,12 @@
 fish::fish() {
     x = 0;
     y = 0;
+    boundx = 50; 
+    boundy = 50; 
     speed = 1;
-    boundx = 50;
-    boundy = 50;
     sprite = al_load_bitmap("fish.png");
     live = false;
+
 }
 
 fish::~fish() {
@@ -37,18 +38,8 @@ void fish::UpdateFish() {
 void fish::CollideFish() {
     if (!live) return;
 
-    int stageH = 50;
-    int stageW = 800;
-
-    // hit the stage at bottom of screen
-    bool hitX = x > 0 && x < stageW;
-    bool hitY = y + boundy >= 600 - stageH;
-
-    if (hitY && hitX) {
-        live = false;
-    }
-
-    if (y > 600) {
+    if (y > 500) {
+        fishHit = true;
         live = false;
     }
 }

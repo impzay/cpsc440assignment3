@@ -12,6 +12,7 @@ const int SCREEN_H = 600;
 const int FPS = 60;
 const int MAX_FISH = 5;
 const int MAX_HARPOON = 5;
+int total_fish_hit = 0;
 ALLEGRO_COLOR sand_color = al_map_rgb(194, 178, 128);
 
 bool keys[5] = { false };
@@ -36,7 +37,7 @@ int main() {
     al_set_window_title(disp, "Harpoon Shooter!");
 
 	ALLEGRO_BITMAP* background = al_load_bitmap("background.png");
-    
+    ALLEGRO_FONT* font = al_create_builtin_font();
 
     harpoon cannon(true);
     harpoon harpoons[MAX_HARPOON];
@@ -62,6 +63,23 @@ int main() {
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             redraw = true;
             bool left;
+
+			for (int i = 0; i < MAX_FISH; i++) {
+                if (fishes[i].fishHit) {
+					total_fish_hit ++;
+                    fishes[i].fishHit = false;
+					
+                }
+			}
+            if (total_fish_hit >= 5) {
+                al_draw_bitmap(background, 0, 0, 0);
+              
+                al_draw_text(font, al_map_rgb(0,0,0), SCREEN_W / 2, SCREEN_H / 2 - 24, ALLEGRO_ALIGN_CENTRE, "You lose.");
+                al_flip_display();
+                al_rest(3.0); // wait for 3 seconds
+                //end game
+                running = false;
+            }
 
             if (keys[LEFT]) {
                 left = true;
